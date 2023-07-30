@@ -17,17 +17,27 @@ export const Label = styled.label`
   color: ${props => props.theme.colors.primaryText};
 `;
 
+export  const InputContainer = styled.div`
+  position: relative;
+  display: inline-flex;
+`;
 export const InputForm = styled.input`
   display: block;
+  width: 100%;
   font-size: 14px;
   padding: 12px;
   border: ${props => ` 1px solid ${props.theme.colors.grey}`};
   border-radius: 4px;
   color: ${props => props.theme.colors.primaryText};
   background-color: ${props => props.theme.colors.white};
+  padding-left: 34px;
 `;
 
 export const ButtonAdd = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
   font-size: 14px;
   border: ${props => ` 1px solid ${props.theme.colors.grey}`};

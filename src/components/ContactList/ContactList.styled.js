@@ -28,6 +28,10 @@ export const ContactNumber = styled.span`
 
 
 export const Delete = styled.button`
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //gap: 8px;
   cursor: pointer;
   background-color: ${props => props.theme.colors.white};
   border: ${props => ` 1px solid ${props.theme.colors.grey}`};

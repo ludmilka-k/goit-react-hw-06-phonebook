@@ -1,16 +1,30 @@
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteContact, getContacts} from '../../redux';
+import {getFilter} from '../../redux';
+import  { RiUserUnfollowFill } from 'react-icons/ri'
+import { iconSize } from '../../constants';
 import {List, Item, Delete, ContactName, ContactNumber} from './ContactList.styled'
 
-export const ContactList = ({ contacts, onRemoveContact }) => {
+export const ContactList = () => {
+	const contacts = useSelector(getContacts);
+	const filter = useSelector(getFilter);
+	const dispatch = useDispatch();
+
+	const filteredContacts = contacts.filter(contact =>
+	  contact.name.toLowerCase().includes(filter.toLowerCase())
+	);
+	const onRemoveContact = (contactId) => {
+		dispatch(deleteContact(contactId));
+	};
 	return (
     <List >
-      {contacts.map(contact => (
+      {filteredContacts.map(contact => (
         <Item key={contact.id}>
           <ContactName>
             <b>{contact.name}:</b><ContactNumber>{contact.number}</ContactNumber>
           </ContactName>
           <Delete type="button" onClick={() => onRemoveContact(contact.id)}>
-            Delete
+            <RiUserUnfollowFill size={iconSize.sm}/>
           </Delete>
         </Item>
       ))}
@@ -18,13 +32,3 @@ export const ContactList = ({ contacts, onRemoveContact }) => {
 	)
 }
 
-ContactList.prototype = {
-	contacts: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			number: PropTypes.string.isRequired,
-		})
-	).isRequired,
-	onRemoveContact: PropTypes.func.isRequired,
-};

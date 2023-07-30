@@ -1,7 +1,19 @@
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import {filterByName, getFilter} from '../../redux';
 import {FilterForm, Label, Input} from './Filter.styled'
 
-export const Filter = ({filter, onFilterChange }) => {
+const filterInputId = nanoid();
+export const Filter = () => {
+	const filter = useSelector(getFilter);
+	const dispatch = useDispatch();
+
+
+
+	const onFilterChange = (event) => {
+		const stringifyValue = event.target.value.toLowerCase();
+		dispatch(filterByName(stringifyValue));
+	};
 	return (
 		<>
 			<FilterForm >
@@ -12,6 +24,7 @@ export const Filter = ({filter, onFilterChange }) => {
 						value={filter}
 						onChange={onFilterChange}
 						placeholder="Search by name"
+						id={filterInputId}
 					/>
 				</Label>
 			</FilterForm>
@@ -19,8 +32,3 @@ export const Filter = ({filter, onFilterChange }) => {
 	)
 }
 
-Filter.propTypes = {
-	onFilterChange: PropTypes.func.isRequired,
-	filter: PropTypes.string.isRequired,
-
-};
